@@ -5,7 +5,7 @@ gotty: app/resource.go main.go app/*.go
 
 resource:  app/resource.go
 
-app/resource.go: bindata/static/js/hterm.js bindata/static/js/gotty.js  bindata/static/index.html bindata/static/favicon.png
+app/resource.go: bindata/static/js/xterm.js bindata/static/css/xterm.css bindata/static/js/app.js bindata/static/css/app.css bindata/static/js/overlay/overlay.js bindata/static/index.html bindata/static/favicon.png bindata/static/js/fit/fit.js
 	go-bindata -prefix bindata -pkg app -ignore=\\.gitkeep -o app/resource.go bindata/...
 	gofmt -w app/resource.go
 
@@ -24,13 +24,32 @@ bindata/static/favicon.png: bindata/static resources/favicon.png
 bindata/static/js: bindata/static
 	mkdir -p bindata/static/js
 
-bindata/static/js/hterm.js: bindata/static/js libapps/hterm/js/*.js
-	cd libapps && \
-	LIBDOT_SEARCH_PATH=`pwd` ./libdot/bin/concat.sh -i ./hterm/concat/hterm_all.concat -o ../bindata/static/js/hterm.js
+bindata/static/css: bindata/static 
+	mkdir -p bindata/static/css
 
-bindata/static/js/gotty.js: bindata/static/js resources/gotty.js
-	cp resources/gotty.js bindata/static/js/gotty.js
+bindata/static/js/overlay: bindata/static/js
+	mkdir -p bindata/static/js/overlay
 
+bindata/static/js/fit: bindata/static/js
+	mkdir -p bindata/static/js/fit
+
+bindata/static/js/app.js: bindata/static/js resources/js/app.js
+	cp resources/js/app.js bindata/static/js/app.js
+
+bindata/static/css/app.css: bindata/static/css resources/css/app.css
+	cp resources/css/app.css bindata/static/css/app.css
+
+bindata/static/js/xterm.js: bindata/static/js resources/node_modules/xterm/dist/xterm.js
+	cp resources/node_modules/xterm/dist/xterm.js bindata/static/js/xterm.js
+
+bindata/static/css/xterm.css: bindata/static/css resources/node_modules/xterm/dist/xterm.css
+	cp resources/node_modules/xterm/dist/xterm.css bindata/static/css/xterm.css
+
+bindata/static/js/overlay/overlay.js: bindata/static/js/overlay resources/js/overlay/overlay.js 
+	cp resources/js/overlay/overlay.js bindata/static/js/overlay/overlay.js
+
+bindata/static/js/fit/fit.js: bindata/static/js/fit resources/node_modules/xterm/dist/addons/fit/fit.js
+	cp resources/node_modules/xterm/dist/addons/fit/fit.js bindata/static/js/fit/fit.js
 tools:
 	go get github.com/tools/godep
 	go get github.com/mitchellh/gox
