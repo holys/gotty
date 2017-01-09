@@ -1,0 +1,20 @@
+{
+  "name": "gotty",
+  "version": "0.0.13",
+  "description": "Share your terminal as a web application",
+  "main": "js/app.js",
+  "repository": {
+    "url": "git@github.com:holys/gotty.git",
+    "type": "git"
+  },
+  "author": "Iwasaki Yudai <yudai@arielworks.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "gulp"
+  },
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-inline-source": "^3.0.0",
+    "xterm": "^2.2.3"
+  }
+}
